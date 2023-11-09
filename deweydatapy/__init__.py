@@ -7,4 +7,4 @@ from .download import (get_file_list,
                        slice_files_df
                        )
 
-message = "Dewey Data Inc. #0.0.3"
+message = "Dewey Data Inc."
