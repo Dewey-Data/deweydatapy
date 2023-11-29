@@ -1,3 +1,4 @@
+import gzip
 import os
 import sys
 from io import BytesIO
