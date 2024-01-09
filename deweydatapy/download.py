@@ -23,8 +23,8 @@ def get_file_list(apikey, product_path, start_page=1, end_page=float('inf'),
     :param product_path: API endpoint or Product ID.
     :param start_page: Start page of file list. Default is 1.
     :param end_page: End page of file list. Default is Inf.
-    :param partition_key_after: Partition key after. Default is None which indicates from the beginning of the list.
-    :param partition_key_before: Partition key before. Default is None which indicates to the end of the list.
+    :param partition_key_after: Partition key after in the form of '2021-07-01'. Default is None ('1000-01-01') which indicates no limit.
+    :param partition_key_before: Partition key before in the form of '2023-08-21'. Default is None ('9999-12-31') which indicates no limit.
     :param print_info: Print file list information. Default is True.
     :return: A DataFrame object contains files information.
     """
