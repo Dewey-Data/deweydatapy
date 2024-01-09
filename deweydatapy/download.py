@@ -13,7 +13,9 @@ def __make_api_endpoint(path):
     else:
         return path
 
-def get_file_list(apikey, product_path, start_page=1, end_page=float('inf'), print_info=True):
+def get_file_list(apikey, product_path, start_page=1, end_page=float('inf'),
+                  partition_key_after=None, partition_key_before=None,
+                  print_info=True):
     """
     Collects the file list information from data server.
 
@@ -21,6 +23,8 @@ def get_file_list(apikey, product_path, start_page=1, end_page=float('inf'), pri
     :param product_path: API endpoint or Product ID.
     :param start_page: Start page of file list. Default is 1.
     :param end_page: End page of file list. Default is Inf.
+    :param partition_key_after: Partition key after. Default is None which indicates from the beginning of the list.
+    :param partition_key_before: Partition key before. Default is None which indicates to the end of the list.
     :param print_info: Print file list information. Default is True.
     :return: A DataFrame object contains files information.
     """
@@ -29,6 +33,11 @@ def get_file_list(apikey, product_path, start_page=1, end_page=float('inf'), pri
     # product_path = pp_sg_poipoly
     # start_page = 1
     # end_page = float('inf')
+
+    if partition_key_after is None:
+        partition_key_after = "1000-01-01"
+    if partition_key_before is None:
+        partition_key_before = "9999-12-31"
 
     product_path = __make_api_endpoint(product_path)
     data_meta = None
@@ -39,7 +48,9 @@ def get_file_list(apikey, product_path, start_page=1, end_page=float('inf'), pri
     while True:
         try:
             response = requests.get(url=product_path,
-                                    params={'page': page},
+                                    params={'page': page,
+                                            'partition_key_after': partition_key_after,
+                                            'partition_key_before': partition_key_before},
                                     headers={'X-API-KEY': apikey,
                                              'accept': 'application/json'})
         except Exception as e:
