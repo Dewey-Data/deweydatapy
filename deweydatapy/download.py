@@ -25,7 +25,8 @@ def get_file_list(apikey, product_path, start_page=1, end_page=float('inf'), pri
     :return: A DataFrame object contains files information.
     """
     # apikey = apikey_
-    # product_path = pp_advan_wp
+    # product_path = pp_renthub
+    # product_path = pp_sg_poipoly
     # start_page = 1
     # end_page = float('inf')
 
@@ -54,6 +55,11 @@ def get_file_list(apikey, product_path, start_page=1, end_page=float('inf'), pri
             return None
 
         res_json = response.json()
+        if 'page' not in res_json:
+            print("Error in response.json")
+            print(res_json)
+            print(" ")
+            return None
 
         if res_json['page'] == start_page:
             data_meta = pd.DataFrame({
