@@ -1,7 +1,7 @@
 # deweydataypy
 **_Python_** API for Dewey Data Inc. Currently supports file download and utility functions.
 
-Find the release notes here: [Release Notes](https://github.com/Dewey-Data/deweydatar/blob/main/Release%20notes.md).
+Find the release notes here: [Release Notes](https://github.com/Dewey-Data/deweydatapy/blob/main/Release%20notes.md).
 
 Bug report: https://community.deweydata.io/c/help/python/43.
 
