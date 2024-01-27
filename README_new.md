@@ -1,5 +1,5 @@
 # deweydataypy
-**_Python_** API for Dewey Data Inc. Currently supports file download and utility functions.
+**_Python_** API for Dewey Data Inc.
 
 Find the release notes here: [Release Notes](https://github.com/Dewey-Data/deweydatapy/blob/main/Release%20notes.md).
 
