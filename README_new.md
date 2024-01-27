@@ -10,15 +10,15 @@ Explore data at https://www.deweydata.io/.
 # API tutorial
 ### 1. Create API Key
 In the system, click Connections → Add Connection to create your API key.
-
-<img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/8ba869f0-3356-439c-8288-8b8d4bb76326" width="800">
-<img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/f479586b-ccf4-490b-852c-90051b1e7008" width="600">
+<img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/dd6d4ab2-cc91-4aaf-a4f7-10346e784dbd" width="600">
+<br>
+<img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/b950e521-b00c-4c53-9897-44b70cfdb04b" width="400">
 
 As the message says, please make a copy of your API key and store it somewhere. Also, please hit the **Save** button before use.
 
 ### 2. Get a product path
 Choose your product and Get / Subscribe → Connect to API then you can get API endpoint (product path). Make a copy of it.
-<img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/77000d10-3e36-42c8-be36-361e30e76017" width="800">
+<img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/a7ce1a66-c073-4e30-9c7d-3c22ede95155" width="600">
 
 ### 3. Install `deweydatapy` library
 You can install this library directly from the GitHub source as following.
@@ -45,7 +45,7 @@ import deweydatapy as ddp
 * `read_local`: read data from locally saved csv.gz file
 
 ### 4. Examples
-I am going to use Advan weekly pattern as an example.
+I am going to use `Advan Weekly Pattern` as an example.
 ```Python
 import deweydatapy as ddp
 
@@ -81,7 +81,7 @@ If you do not specifiy `start_date`, it will collect all the files from the mini
 `print_info = True` set to print another meta information of the files like below:
 <img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/01f12591-132d-4e2d-8cf6-9927f58c610a" width = "600">
 
-files_df has a file links (`DataFrame`) with the following information:
+`files_df` has a file links (`DataFrame`) with the following information:
 * `index`: file index ranges from 1 to the number of files
 * `page`: page of the file
 * `link`: file download link
@@ -119,7 +119,7 @@ meta = ddp.get_meta(apikey_, pp_sg_poipoly, print_meta = True);
 ```
 <img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/cfea2339-5386-4083-a4e6-7cc89a9ba284" width = "600">
 
-There is no partition column and minimum and maximum dates are not available. In that case, you can download the data without specifiying date ranges.
+There is no partition column and minimum and maximum dates are not available. In that case, you can download the data without specifiying a date range.
  
 ```Python
 files_df = ddp.get_file_list(apikey_, pp_sg_poipoly, print_info = True);
