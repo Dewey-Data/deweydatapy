@@ -76,7 +76,7 @@ files_df = ddp.get_file_list(apikey_, pp_advan_wp,
 ```
 If you do not specifiy `start_date`, it will collect all the files from the minimum available date, and do not spesify `end_date`, all the files to the maximum available date.
 
-**Dewey datasets are very large most of the time. Please specify `start_date` and `end_date`.**
+**Most Dewey datasets are very large. Please specify `start_date` and `end_date`.**
 
 `print_info = True` set to print another meta information of the files like below:
 <img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/01f12591-132d-4e2d-8cf6-9927f58c610a" width = "600">
