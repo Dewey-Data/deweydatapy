@@ -74,6 +74,26 @@ files_df = ddp.get_file_list(apikey_, pp_advan_wp,
                              end_date = '2023-12-31',
                              print_info = True);
 ```
+<br><br>
+**Be careful!! ------------------------------------------------**
+
+**For a selected date range, the download sever assigns file numbering (0, 1, 2, ...) for each file. Thus, if you have different date ranges (different `start_date` and `end_date`), file names will change due to the file numbering.**
+**For example, the following `files_df1` and `files_df2` will have different file names due to different `start_date`.**
+```r
+files_df1 = ddp.get_file_list(apikey_, pp_advan_wp, 
+                              start_date = '2023-09-03',
+                              end_date = '2023-12-31',
+                              print_info = True)
+
+files_df2 = ddp.get_file_list(apikey_, pp_advan_wp, 
+                              start_date = '2023-07-01',
+                              end_date = '2023-12-31',
+                              print_info = True)
+```
+**This also applies to the funtion `download_files0` (demonstrated below) in the same way.**<br>
+**------------------------------------------------------------**
+<br><br>
+
 If you do not specifiy `start_date`, it will collect all the files from the minimum available date, and do not spesify `end_date`, all the files to the maximum available date.
 
 **Most Dewey datasets are very large. Please specify `start_date` and `end_date`.**
