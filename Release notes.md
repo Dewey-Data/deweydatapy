@@ -6,4 +6,4 @@
   - Get meta to check date range
   - Get download link (`files_df`) for specific date range
   - Download files
-- `skip_exists` default is `FALSE`
+- `skip_exists` default is `False`
