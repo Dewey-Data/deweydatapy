@@ -142,7 +142,7 @@ or
 ddp.download_files1(apikey_, pp_advan_wp, "C:/Temp",
                     start_date = '2023-09-03', end_date = '2023-12-31')
 ```
-The difference between `download_files0` and `download_files1` is that `download_files0` collects all the file list (link) upfront and start downloading. As the links are valid for 24 hours, this may cause an interruption if the download takes over 24 hours. `download_files1`, on the other hand, collects a small page (group) of flie links and download them, and move on to the next page and download them, and so on. This helps the collected links to be valid while downloading.
+The difference between `download_files0` and `download_files1` is that `download_files0` collects all the file list (link) upfront and start downloading. As the links are valid for 24 hours, this may cause an interruption if the download takes over 24 hours. `download_files1`, on the other hand, collects a small page (group) of flie links and download them, and move on to the next page and download them, and so on. This helps the collected links to be valid while downloading. So, it is recommended to use `download_files1` for a large number of files that may take over 24 hours to download.
 
 Some datasets do not have partition column as they are time invariant (SafeGraph Global Places (POI) & Geometry, for example).
 ```Python
