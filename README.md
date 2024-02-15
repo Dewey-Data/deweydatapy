@@ -1,3 +1,6 @@
+**Please read this carefully as the download approach has been changed slightly.**
+
+
 # deweydataypy
 **_Python_** library for Dewey Data Inc.
 
@@ -7,7 +10,9 @@ Bug report: https://community.deweydata.io/c/help/python/43.
 
 Explore data at https://www.deweydata.io/.
 
-# API tutorial
+Underlying Amplify API tutorial: https://github.com/amplifydata/amplifydata-public/blob/main/README.md
+
+# Library tutorial
 ### 1. Create API Key
 In the system, click Connections → Add Connection to create your API key.
 <img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/dd6d4ab2-cc91-4aaf-a4f7-10346e784dbd" width="600">
