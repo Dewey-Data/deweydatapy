@@ -9,4 +9,4 @@
 - `skip_exists` default is `False`
 
 ## 0.2.1
-- Added download_files1
+- Added function `download_files1`
