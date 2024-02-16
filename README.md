@@ -23,6 +23,7 @@ As the message says, please make a copy of your API key and store it somewhere. 
 
 ### 2. Get a product path
 Choose your product and Get / Subscribe → Connect to API then you can get API endpoint (product path). Make a copy of it.
+
 <img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/a7ce1a66-c073-4e30-9c7d-3c22ede95155" width="600">
 
 ### 3. Install `deweydatapy` library
