@@ -96,7 +96,7 @@ files_df2 = ddp.get_file_list(apikey_, pp_advan_wp,
                               end_date = '2023-12-31',
                               print_info = True)
 ```
-**This also applies to the funtion `download_files0` (demonstrated below) in the same way.**<br>
+**This also applies to the funtion `download_files0` and `download_files1` (demonstrated below) in the same way.**<br>
 **------------------------------------------------------------**
 <br><br>
 
