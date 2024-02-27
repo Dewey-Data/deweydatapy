@@ -46,7 +46,7 @@ import deweydatapy as ddp
 * `get_file_list`: gets the list of files in a `DataFrame`
 * `download_files`: download files from the file list to a destination folder
 * `download_files0`: download files with apikey and product path to a destination folder
-* `download_files1`: download files with apikey and product path to a destination folder (see below Examples for the difference 
+* `download_files1`: download files with apikey and product path to a destination folder (see below Examples for the difference between `download_files0` and `download_files1`)
 * `read_sample`: read a sample of data for a file download URL
 * `read_sample0`: read a sample of data for the first file with apikey and product path
 * `read_local`: read data from locally saved csv.gz file
