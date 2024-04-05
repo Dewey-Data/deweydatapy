@@ -13,8 +13,7 @@ First please download the `census_tiger.py` file from the following link:
 
 The Censuf FTP has files/folders like below.
 You can download all of them or specific files/folders in the following way.
-
-<img src="img_1.png" width = "400">
+<img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/78ede7bb-b889-4ca1-835f-c65070430d68" width = "400">
 
 Initiate the FTP server connection and move to the root directory of the year 2023.
 ```Python
@@ -105,6 +104,7 @@ print(joined_gdf)
 ```
 
 Joined GeoDataFrame will have the columns from both the Dewey dataset and the Census TIGER files.
-![img_2.png](img_2.png)
+![image](https://github.com/Dewey-Data/deweydatapy/assets/142400584/ea40f5f1-333b-47e6-9cdf-057975c9797e)
+
 
 Thanks,
