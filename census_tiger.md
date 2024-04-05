@@ -14,8 +14,7 @@ First please download the `census_tiger.py` file from the following link:
 The Censuf FTP has files/folders like below.
 You can download all of them or specific files/folders in the following way.
 
-<img src="img_1.png" width = "600">
-![img_1.png](img_1.png)
+<img src="img_1.png" width = "400">
 
 Initiate the FTP server connection and move to the root directory of the year 2023.
 ```Python
