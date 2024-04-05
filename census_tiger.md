@@ -34,21 +34,12 @@ You can download files in an FTP folder to the local directory (not recommended)
 # First, you have to move to the root directory before downloading new folder
 ftp.cwd(census_ftp_root(2023))
 # Downloand Census Block Group shape files
-download_files(ftp, 'BG', local_dir, recursive=True)
+download_files(ftp, 'BG', local_dir)
 
 # First, you have to move to the root directory before downloading new folder
 ftp.cwd(census_ftp_root(2023))
 # Downloand Census Tract shape files
-download_files(ftp, 'TRACT', local_dir, recursive=True)
-```
-
-**Not recommended** but you can download all files from the FTP server, recursively.     
-```Python
-# Download all.
-# First, you have to move to the root directory before downloading new folder
-ftp.cwd(census_ftp_root(2023))
-# Downloand all files recursively
-download_files(ftp, '', local_dir, recursive=True)
+download_files(ftp, 'TRACT', local_dir)
 ```
 
 Please quit the FTP server after downloading all the files.     
