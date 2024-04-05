@@ -68,9 +68,9 @@ state_gdf = read_shapefile(root_dir, state_code)
 ```
 
 You need geocode to spatial join (`sjoin`) the Census TIGER files with Dewey datasets.
-Many Dewey datasets have latitude and longitude columns.
+Many Dewey datasets have `latitude` and `longitude` columns.
 
-In the following example, we will create a hyphothetical dataset with addresses and geocode them to get latitude and longitude.     
+In the following example, I will create a hyphothetical dataset with addresses and geocode them to get latitude and longitude.     
 ```Python
 # Create an example data
 addr1 = '1600 Amphitheatre Parkway, Mountain View, California, 94043'
@@ -103,7 +103,9 @@ joined_gdf = gpd.sjoin(addr_gdf, state_gdf, how='left', predicate='within')
 print(joined_gdf)
 ```
 
-Joined GeoDataFrame will have the columns from both the Dewey dataset and the Census TIGER files.
+Joined GeoDataFrame will have the columns from both the Dewey dataset and the Census TIGER files
+(Census Tract, Block Group, etc.).
+
 ![image](https://github.com/Dewey-Data/deweydatapy/assets/142400584/ea40f5f1-333b-47e6-9cdf-057975c9797e)
 
 
