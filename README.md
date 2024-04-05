@@ -23,6 +23,7 @@ As the message says, please make a copy of your API key and store it somewhere. 
 
 ### 2. Get a product path
 Choose your product and Get / Subscribe → Connect to API then you can get API endpoint (product path). Make a copy of it.
+
 <img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/a7ce1a66-c073-4e30-9c7d-3c22ede95155" width="600">
 
 ### 3. Install `deweydatapy` library
@@ -45,6 +46,7 @@ import deweydatapy as ddp
 * `get_file_list`: gets the list of files in a `DataFrame`
 * `download_files`: download files from the file list to a destination folder
 * `download_files0`: download files with apikey and product path to a destination folder
+* `download_files1`: download files with apikey and product path to a destination folder (see below Examples for the difference between `download_files0` and `download_files1`)
 * `read_sample`: read a sample of data for a file download URL
 * `read_sample0`: read a sample of data for the first file with apikey and product path
 * `read_local`: read data from locally saved csv.gz file
@@ -95,7 +97,7 @@ files_df2 = ddp.get_file_list(apikey_, pp_advan_wp,
                               end_date = '2023-12-31',
                               print_info = True)
 ```
-**This also applies to the funtion `download_files0` (demonstrated below) in the same way.**<br>
+**This also applies to the funtion `download_files0` and `download_files1` (demonstrated below) in the same way.**<br>
 **------------------------------------------------------------**
 <br><br>
 
