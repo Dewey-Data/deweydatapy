@@ -55,6 +55,11 @@ def download_files(ftp, ftp_dir, local_dir, recursive=True):
             download_files(ftp, file, local_path, True)
         else:  # if it's a file
             local_file = os.path.join(local_path, file)
+            # skip if the file already exists
+            if os.path.exists(local_file):
+                print(f"Skipping {file} as it already exists in {local_file}")
+                continue
+
             print(f"Downloading {file} to {local_file}")
             with open(local_file, 'wb') as f:
                 ftp.retrbinary('RETR ' + file, f.write)
