@@ -1,6 +1,9 @@
-# deweydataypy
+#  Python example for Census mapping.
 
-**_Python_** example for Census mapping.
+Many Dewey datasets have geocode information (latitude and longitude).
+You may want to join demographics data from Census to your datasets.
+This tutorial shows how to download Census TIGER files and join them with Dewey datasets.
+------------------------
 
 Census provides TIGER files for mapping (https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html).
 You can download the files from the Census FTP server.
@@ -15,27 +18,29 @@ The Censuf FTP has files/folders like below.
 You can download all of them or specific files/folders in the following way.
 <img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/78ede7bb-b889-4ca1-835f-c65070430d68" width = "400">
 
-Initiate the FTP server connection and move to the root directory of the year 2023.
+Initiate the FTP server connection.
 ```Python
 # Census TIGER FTP download code sample ----------------------
+from census_tiger import *
+
 # Local directory to save downloaded files
 local_dir = 'Your local directory path to save Census TIGER files'
 
 # Connect to the FTP server first
 ftp = census_ftp_login()
 
-# Change directory to the year 2023 TIGER directory
-ftp.cwd(census_ftp_root(2023))
 ```
 
-You can download files in an FTP folder to the local directory (not recommended)     
+You can download files in an FTP folder to the local directory
 ```Python
 # First, you have to move to the root directory before downloading new folder
+# Move to 2023 Census TIGER files root directory
 ftp.cwd(census_ftp_root(2023))
 # Downloand Census Block Group shape files
 download_files(ftp, 'BG', local_dir)
 
 # First, you have to move to the root directory before downloading new folder
+# Move to 2023 Census TIGER files root directory
 ftp.cwd(census_ftp_root(2023))
 # Downloand Census Tract shape files
 download_files(ftp, 'TRACT', local_dir)
@@ -108,5 +113,6 @@ Joined GeoDataFrame will have the columns from both the Dewey dataset and the Ce
 
 ![image](https://github.com/Dewey-Data/deweydatapy/assets/142400584/ea40f5f1-333b-47e6-9cdf-057975c9797e)
 
+Row number 3 has correct Census Tract and Block Group information.
 
 Thanks,
