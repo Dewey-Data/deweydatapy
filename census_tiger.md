@@ -2,7 +2,7 @@
 
 Many Dewey datasets have geocode information (latitude and longitude).
 You may want to join demographics data from Census to your datasets.
-This tutorial shows how to download Census TIGER files and join them with Dewey datasets.
+This example shows how to download Census TIGER files and join them with Dewey datasets.
 
 Census provides TIGER files for mapping (https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html).
 You can download the files from the Census FTP server.
