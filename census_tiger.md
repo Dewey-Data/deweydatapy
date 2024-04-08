@@ -94,7 +94,7 @@ Joined GeoDataFrame will have the columns from both the Dewey dataset and the Ce
 CBSA only has one file, `tl_2023_us_cbsa.zip`. In this case, you can open this file directly.
 ```Python
 # Read CBSA shapefile
-shapefile_path = r'C:\temp\2023\CBSA\tl_2023_us_cbsa.zip'
+shapefile_path = r'C:\tiger\2023\CBSA\tl_2023_us_cbsa.zip'
 cbsa_gdf = gpd.read_file("zip://" + shapefile_path)
 ```
 Then same process afterward.
