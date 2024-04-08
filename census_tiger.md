@@ -42,8 +42,7 @@ download_tiger_files(2023, ['BG', 'TRACT', 'CBSA'], local_dir, skip_existing=Tru
 ```
 `skip_existing` is set to `True` to skip already downloaded files.
 
-Then you can join the Census Tract, Block Group, CBSA, etc. with Dewey datasets.     
-Direct to the local directory where you saved the Census TIGER files.     
+Then you can join the Census Tract, Block Group, CBSA, etc. with Dewey datasets. Direct to the local directory where you saved the Census TIGER files.     
 ```Python
 # Read state shapefile
 # 'C:/tiger/2023' for example
@@ -89,6 +88,7 @@ CBSA only has one file, `tl_2023_us_cbsa.zip`. In this case, you can open this f
 ```Python
 # Read CBSA shapefile
 shapefile_path = r'C:\tiger\2023\CBSA\tl_2023_us_cbsa.zip'
+# Read CBSA shapefile as GeoDataFrame
 cbsa_gdf = gpd.read_file("zip://" + shapefile_path)
 ```
 Then same process afterward.
