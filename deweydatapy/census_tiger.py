@@ -13,26 +13,32 @@ TIGER_FTP_HOST = 'ftp2.census.gov'
 TIGER_FTP_DIR_PREFIX = '/geo/tiger/TIGER'
 
 def is_directory(ftp, item):
-    try:
-        # Attempt to change directory to the item
-        ftp.cwd(item)
-        # If successful, it's a directory
-        ftp.cwd('..')  # Go back to parent directory
-        return True
-    except:
-        # If changing directory fails, it's not a directory
+    # Check if the item is a directory
+    if '.' in item:
         return False
+    else:
+        return True
+
+    # try:
+    #     # Attempt to change directory to the item
+    #     ftp.cwd(item)
+    #     # If successful, it's a directory
+    #     ftp.cwd('..')  # Go back to parent directory
+    #     return True
+    # except:
+    #     # If changing directory fails, it's not a directory
+    #     return False
 
 def census_ftp_login():
     # Connect to the FTP server
-    ftp = FTP(TIGER_FTP_HOST)
+    ftp = FTP(TIGER_FTP_HOST, timeout=600)
     ftp.login()
     return ftp
 
 def census_ftp_root(year):
     return f'{TIGER_FTP_DIR_PREFIX}{year}/'
 
-def download_files(ftp, ftp_dir, local_dir, recursive=True):
+def download_files(ftp, ftp_dir, local_dir, recursive = False, skip_existing=True):
     # Change directory to the remote directory
     if ftp_dir.startswith('/'):
         ftp_dir = ftp_dir[1:]
@@ -51,18 +57,37 @@ def download_files(ftp, ftp_dir, local_dir, recursive=True):
 
     # Download files and recurse into directories
     for file in files:
-        if (recursive and is_directory(ftp, file)):  # if it's a directory
-            download_files(ftp, file, local_path, True)
+        if is_directory(ftp, file):  # if it's a directory
+            if recursive:
+                download_files(ftp, file, local_path, True)
+
         else:  # if it's a file
             local_file = os.path.join(local_path, file)
             # skip if the file already exists
-            if os.path.exists(local_file):
+            if skip_existing and os.path.exists(local_file):
                 print(f"Skipping {file} as it already exists in {local_file}")
                 continue
 
             print(f"Downloading {file} to {local_file}")
             with open(local_file, 'wb') as f:
                 ftp.retrbinary('RETR ' + file, f.write)
+
+def download_tiger_files(year, datasets, local_dir, recursive = False, skip_existing=True):
+    # Connect to the FTP server
+    ftp = census_ftp_login()
+
+
+    # Download files for each dataset
+    if not isinstance(datasets, list):
+        datasets = [datasets]
+
+    for dataset in datasets:
+        # Change directory to the TIGER year root directory
+        ftp.cwd(census_ftp_root(year))
+        download_files(ftp, dataset, local_dir, recursive, skip_existing)
+
+    # Quit the FTP connection
+    ftp.quit()
 
 def geocode_addresses(df, address_column):
     """
