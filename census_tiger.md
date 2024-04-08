@@ -98,6 +98,6 @@ CBSA only has one file, `tl_2023_us_cbsa.zip`. In this case, you can open this f
 shapefile_path = r'C:\temp\2023\CBSA\tl_2023_us_cbsa.zip'
 cbsa_gdf = gpd.read_file("zip://" + shapefile_path)
 ```
-Then, same process afterward.
+Then same process afterward.
 
 Thanks,
