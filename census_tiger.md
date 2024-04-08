@@ -21,55 +21,46 @@ You can download all of them or specific files/folders in the following way.
 Initiate the FTP server connection.
 ```Python
 # Census TIGER FTP download code sample ----------------------
+import pandas as pd
+import geopandas as gpd
 from census_tiger import *
 
 # Local directory to save downloaded files
+# 'C:/tiger/2023' for example
 local_dir = 'Your local directory path to save Census TIGER files'
-
-# Connect to the FTP server first
-ftp = census_ftp_login()
-
 ```
 
-You can download files in an FTP folder to the local directory
+To download files for year 2023
 ```Python
-# First, you have to move to the root directory before downloading new folder
-# Move to 2023 Census TIGER files root directory
-ftp.cwd(census_ftp_root(2023))
-# Downloand Census Block Group shape files
-download_files(ftp, 'BG', local_dir)
+# Download files in the root directory
+download_tiger_files(2023, '', local_dir, skip_existing=True)
 
-# First, you have to move to the root directory before downloading new folder
-# Move to 2023 Census TIGER files root directory
-ftp.cwd(census_ftp_root(2023))
-# Downloand Census Tract shape files
-download_files(ftp, 'TRACT', local_dir)
-```
+# Download files in the BG (Block Group) folder
+download_tiger_files(2023, ['BG'], local_dir, skip_existing=True)
 
-Please quit the FTP server after downloading all the files.     
-```Python
-# Quit FTP
-ftp.quit()
+# Download files in the BG (Block Group), TRACT (Census Tract), CBSA (Core Based Statistical Area) folder
+download_tiger_files(2023, ['BG', 'TRACT', 'CBSA'], local_dir, skip_existing=True)
 ```
+`skip_existing` is set to `True` to skip already downloaded files.
 
 Then you can join the Census Tract, Block Group, CBSA, etc. with Dewey datasets.     
 ```Python
 from census_tiger import *
 import pandas as pd
+
 ```
 
 Direct to the local directory where you saved the Census TIGER files.     
 ```Python
 # Read state shapefile
+# 'C:/tiger/2023' for example
 local_dir = 'Your local directory path to Census TIGER files'
-
-# If you know the state code (06 for California, for example), you can use it.
-# Or you can use 'CA' instead.
-state_code = '06'
 
 # Read donwloaded state shapefile
 # read_shapefile works only for BG and TRACT filles.
-state_gdf = read_shapefile(root_dir, state_code)
+# Reading 'BG' for example. If you know the state code (06 for California, for example), you can use it.
+# Or you can use 'CA' instead.
+state_bg_gdf = read_shapefile(local_dir, 'BG', '06')
 ```
 
 You need geocode to spatial join (`sjoin`) the Census TIGER files with Dewey datasets.
@@ -79,32 +70,20 @@ In the following example, I will create a hyphothetical dataset with addresses a
 ```Python
 # Create an example data
 addr1 = '1600 Amphitheatre Parkway, Mountain View, California, 94043'
-addr2 = '1 Apple Park Way, Cupertino, California, 95014'
-addr3 = '200 N Spring St, Los Angeles, CA 90012'
+addr2 = '200 N Spring St, Los Angeles, CA 90012'
 
 # Create GeoDataFrame
-addr_df = pd.DataFrame({'Address': [addr1, addr2, addr3]})
-
-# Add geocode
-addr_df = geocode_addresses(addr_df, 'Address')
+addr_df = pd.DataFrame({'Address': [addr1, addr2],
+                        'latitude': [37.423120361622935, 34.05162175030242],
+                        'longitude': [-122.08352124965603, -118.24559360036471]})
 ```
-
-`geocode_addresses` uses `geopy` to geocode the addresses. `addr3` is Los Angeles City Hall.
-I found that the latitude and longitude of the City Hall from `geopy` is inaccurate.
-So, the following row is added to the DataFrame manually.     
-```Python
-new_row = pd.DataFrame({'Address': [addr3],
-                        'latitude': [34.05162175030242],
-                        'longitude': [-118.24559360036471]})
-
-addr_df = pd.concat([addr_df, new_row], ignore_index=True)
-```
-
-Now, you can join the Census TIGER files with the Dewey dataset.     
+Now, you can join the Census TIGER files with the Dewey dataset.
+`geopandas`'s `sjoin` function is used for the spatial join.      
 ```Python
 addr_gdf = gpd.GeoDataFrame(addr_df, geometry=gpd.points_from_xy(addr_df['longitude'], addr_df['latitude']))
 
-joined_gdf = gpd.sjoin(addr_gdf, state_gdf, how='left', predicate='within')
+# Spatial join if the address geocode is within the state boundary
+joined_gdf = gpd.sjoin(addr_gdf, state_bg_gdf, how='left', predicate='within')
 print(joined_gdf)
 ```
 
@@ -113,6 +92,12 @@ Joined GeoDataFrame will have the columns from both the Dewey dataset and the Ce
 
 ![image](https://github.com/Dewey-Data/deweydatapy/assets/142400584/ea40f5f1-333b-47e6-9cdf-057975c9797e)
 
-Row number 3 has correct Census Tract and Block Group information.
+CBSA only has one file, `tl_2023_us_cbsa.zip`. In this case, you can open this file directly.
+```Python
+# Read CBSA shapefile
+shapefile_path = r'C:\temp\2023\CBSA\tl_2023_us_cbsa.zip'
+cbsa_gdf = gpd.read_file("zip://" + shapefile_path)
+```
+Then, same process afterward.
 
 Thanks,

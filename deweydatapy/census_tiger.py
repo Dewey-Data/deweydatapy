@@ -72,7 +72,7 @@ def download_files(ftp, ftp_dir, local_dir, recursive = False, skip_existing=Tru
             with open(local_file, 'wb') as f:
                 ftp.retrbinary('RETR ' + file, f.write)
 
-def download_tiger_files(year, datasets, local_dir, recursive = False, skip_existing=True):
+def download_tiger_files(local_dir, year, datasets, recursive = False, skip_existing=True):
     # Connect to the FTP server
     ftp = census_ftp_login()
 
@@ -128,17 +128,19 @@ def geocode_addresses(df, address_column):
 # df_geocoded = geocode_addresses(df_addresses, 'address')
 # print(df_geocoded)
 
-def read_shapefile(root_dir, state_code):
+def read_shapefile(local_dir, dataset, state_code):
     # Read the shapefile
     if not state_code.isnumeric():
         state_code = us.states.lookup(state_code).fips
 
     # _state_code_
     state_code_ = f'_{state_code}_'
-    files = os.listdir(root_dir)
+    local_dir = os.path.join(local_dir, dataset)
+
+    files = os.listdir(local_dir)
     # Find the shapefile contains state_code_
     file = [file for file in files if state_code_ in file]
-    shapefile_path = os.path.join(root_dir, file[0])
+    shapefile_path = os.path.join(local_dir, file[0])
 
     gdf = gpd.read_file("zip://" + shapefile_path)
 
