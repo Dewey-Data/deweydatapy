@@ -90,7 +90,7 @@ print(joined_gdf)
 Joined GeoDataFrame will have the columns from both the Dewey dataset and the Census TIGER files
 (Census Tract, Block Group, etc.).
 
-![image](https://github.com/Dewey-Data/deweydatapy/assets/142400584/ea40f5f1-333b-47e6-9cdf-057975c9797e)
+![image](https://github.com/Dewey-Data/deweydatapy/assets/142400584/d6b175df-d927-4491-b18f-d1057beaa70f)
 
 CBSA only has one file, `tl_2023_us_cbsa.zip`. In this case, you can open this file directly.
 ```Python
