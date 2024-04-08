@@ -43,12 +43,6 @@ download_tiger_files(2023, ['BG', 'TRACT', 'CBSA'], local_dir, skip_existing=Tru
 `skip_existing` is set to `True` to skip already downloaded files.
 
 Then you can join the Census Tract, Block Group, CBSA, etc. with Dewey datasets.     
-```Python
-from census_tiger import *
-import pandas as pd
-
-```
-
 Direct to the local directory where you saved the Census TIGER files.     
 ```Python
 # Read state shapefile
