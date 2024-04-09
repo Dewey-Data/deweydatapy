@@ -13,11 +13,12 @@ First please download the `census_tiger.py` file from the following link:
 *https://github.com/Dewey-Data/deweydatapy/blob/main/deweydatapy/census_tiger.py*
 (This is not a part of the Dewey dataset package yet.)
 
-The Censuf FTP has files/folders like below.
+The Census FTP has files/folders like below.
 You can download all of them or specific files/folders in the following way.
 <img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/78ede7bb-b889-4ca1-835f-c65070430d68" width = "400">
 
-Initiate the FTP server connection.
+Import necessary libraries and the `census_tiger.py` file and
+prepare local directory to save Census TIGER shape files.
 ```Python
 # Census TIGER FTP download code sample ----------------------
 import pandas as pd
@@ -29,7 +30,7 @@ from census_tiger import *
 local_dir = 'Your local directory path to save Census TIGER files'
 ```
 
-To download files for year 2023
+To download files for year 2023, you can use any of the following approches.
 ```Python
 # Download files in the root directory
 download_tiger_files(2023, '', local_dir, skip_existing=True)
@@ -92,5 +93,9 @@ shapefile_path = r'C:\tiger\2023\CBSA\tl_2023_us_cbsa.zip'
 cbsa_gdf = gpd.read_file("zip://" + shapefile_path)
 ```
 Then same process afterward.
+
+Once you have Census data, such as American Community Survey (ACS)
+(https://www.census.gov/programs-surveys/acs), you can join them with Dewey datasets
+by Census Tract or Glock Group.
 
 Thanks,
