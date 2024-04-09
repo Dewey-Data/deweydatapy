@@ -17,8 +17,8 @@ The Census FTP has files/folders like below.
 You can download all of them or specific files/folders in the following way.
 <img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/78ede7bb-b889-4ca1-835f-c65070430d68" width = "400">
 
-Import necessary libraries and the `census_tiger.py` file and
-prepare local directory to save Census TIGER shape files.
+Import necessary libraries and the `census_tiger.py` file.
+ Also, prepare local directory to save Census TIGER shape files.
 ```Python
 # Census TIGER FTP download code sample ----------------------
 import pandas as pd
@@ -65,17 +65,21 @@ In the following example, I will create a hyphothetical dataset with addresses a
 addr1 = '1600 Amphitheatre Parkway, Mountain View, California, 94043'
 addr2 = '200 N Spring St, Los Angeles, CA 90012'
 
-# Create GeoDataFrame
+# Create address DataFrame
 addr_df = pd.DataFrame({'Address': [addr1, addr2],
                         'latitude': [37.423120361622935, 34.05162175030242],
                         'longitude': [-122.08352124965603, -118.24559360036471]})
+
+# Convert to a GeoDataFrame
+addr_gdf = gpd.GeoDataFrame(addr_df, geometry=gpd.points_from_xy(addr_df['longitude'], addr_df['latitude']))
 ```
 Now, you can join the Census TIGER files with the Dewey dataset.
-`geopandas`'s `sjoin` function is used for the spatial join.      
-```Python
-addr_gdf = gpd.GeoDataFrame(addr_df, geometry=gpd.points_from_xy(addr_df['longitude'], addr_df['latitude']))
+`geopandas`'s `sjoin` function is used for the spatial join.
+This will spatial join if the address geocode is within the state_bg_gdf boundary (polygon of BG, TRACT, CBSA, etc.)
 
-# Spatial join if the address geocode is within the boundary (polygon of BG, TRACT, CBSA, etc.)
+```Python
+# Spatial join if the address geocode is
+# within the state_bg_gdf boundary (polygon of BG, TRACT, CBSA, etc.)
 joined_gdf = gpd.sjoin(addr_gdf, state_bg_gdf, how='left', predicate='within')
 print(joined_gdf)
 ```
