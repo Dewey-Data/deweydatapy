@@ -75,7 +75,7 @@ Now, you can join the Census TIGER files with the Dewey dataset.
 ```Python
 addr_gdf = gpd.GeoDataFrame(addr_df, geometry=gpd.points_from_xy(addr_df['longitude'], addr_df['latitude']))
 
-# Spatial join if the address geocode is within the state boundary
+# Spatial join if the address geocode is within the boundary (polygon of BG, TRACT, CBSA, etc.)
 joined_gdf = gpd.sjoin(addr_gdf, state_bg_gdf, how='left', predicate='within')
 print(joined_gdf)
 ```
