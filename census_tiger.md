@@ -10,7 +10,7 @@ The following code snippet shows how to download the files then use it with Dewe
 
 
 First please download the `census_tiger.py` file from the following link:
-*https://github.com/Dewey-Data/deweydatapy/blob/main/deweydatapy/census_tiger.py*
+*https://github.com/Dewey-Data/deweydatapy/blob/main/deweydatapy/census/census_tiger.py*
 (This is not a part of the Dewey dataset package yet.)
 
 The Census FTP has files/folders like below.
