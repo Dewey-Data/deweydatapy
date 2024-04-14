@@ -1,6 +1,6 @@
 #  Python example for Census mapping.
 
-**This moudule is being developed. Your feedback is welcome.**
+**This module is being developed. Your feedback is welcome.**
 
 Many Dewey datasets have geocode information (latitude and longitude).
 You may want to join demographics data from Census to your datasets.

@@ -91,7 +91,8 @@ class CensusShape:
     
         # Quit the FTP connection
         ftp.quit()
-    
+
+    # Will be activated later ------------------
     # def geocode_addresses(df, address_column):
     #     """
     #     Adds 'latitude' and 'longitude' columns to the DataFrame based on geocoding the addresses.
