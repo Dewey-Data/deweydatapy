@@ -1,59 +1,64 @@
 #  Python example for Census mapping.
 
+**This moudule is being developed. Your feedback is welcome.**
+
 Many Dewey datasets have geocode information (latitude and longitude).
 You may want to join demographics data from Census to your datasets.
-This example shows how to download Census TIGER files and join them with Dewey datasets.
+This example shows how to download Census shapefiles and join them with Dewey datasets.
 
-Census provides TIGER files for mapping (https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html).
+Census provides shapefiles for mapping (https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html).
 You can download the files from the Census FTP server.
 The following code snippet shows how to download the files then use it with Dewey datasets.
 
 
-First please download the `census_tiger.py` file from the following link:
-*https://github.com/Dewey-Data/deweydatapy/blob/main/deweydatapy/census/census_tiger.py*
+First please download the `census_shape.py` file from the following link:
+*https://github.com/Dewey-Data/deweydatapy/blob/main/deweydatapy/census/census_shape.py*
 (This is not a part of the Dewey dataset package yet.)
 
 The Census FTP has files/folders like below.
 You can download all of them or specific files/folders in the following way.
 <img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/78ede7bb-b889-4ca1-835f-c65070430d68" width = "400">
 
-Import necessary libraries and the `census_tiger.py` file.
+Import necessary libraries and the `census_shape.py` file.
  Also, prepare local directory to save Census TIGER shape files.
 ```Python
 # Census TIGER FTP download code sample ----------------------
 import pandas as pd
 import geopandas as gpd
-from census_tiger import *
+from census_shape import *
 
 # Local directory to save downloaded files
-# 'C:/tiger/2023' for example
+# 'C:/census_shape/2023' for example
 local_dir = 'Your local directory path to save Census TIGER files'
 ```
 
 To download files for year 2023, you can use any of the following approches.
 ```Python
 # Download files in the root directory
-download_tiger_files(2023, '', local_dir, skip_existing=True)
+# Create a CensusShape object
+cs = CensusShape(local_dir, 2023)
 
-# Download files in the BG (Block Group) folder
-download_tiger_files(2023, ['BG'], local_dir, skip_existing=True)
+# Download files in the root directory
+cs.download_shapefiles('', skip_existing=True, timeout=600)
 
-# Download files in the BG (Block Group), TRACT (Census Tract), CBSA (Core Based Statistical Area) folder
-download_tiger_files(2023, ['BG', 'TRACT', 'CBSA'], local_dir, skip_existing=True)
+# Download shapefiles for a specified dataset
+cs.download_shapefiles(['CSA'], skip_existing=True)
+
+# Download shapefiles for the specified datasets
+cs.download_shapefiles(['BG', 'TRACT', 'CBSA'], skip_existing=True)
 ```
-`skip_existing` is set to `True` to skip already downloaded files.
+`skip_existing` is set to `True` to skip already downloaded files. `timeout` is set to 600 seconds. You can
+increase `timeout` if you have a slow internet connection.
 
 Then you can join the Census Tract, Block Group, CBSA, etc. with Dewey datasets. Direct to the local directory where you saved the Census TIGER files.     
 ```Python
 # Read state shapefile
-# 'C:/tiger/2023' for example
-local_dir = 'Your local directory path to Census TIGER files'
 
 # Read donwloaded state shapefile
 # read_shapefile works only for BG and TRACT filles.
 # Reading 'BG' for example. If you know the state code (06 for California, for example), you can use it.
 # Or you can use 'CA' instead.
-state_bg_gdf = read_shapefile(local_dir, 'BG', '06')
+state_bg_gdf = cs.read_state_shapefile('BG', '06')
 ```
 
 You need geocode to spatial join (`sjoin`) the Census TIGER files with Dewey datasets.
@@ -89,10 +94,15 @@ Joined GeoDataFrame will have the columns from both the Dewey dataset and the Ce
 
 ![image](https://github.com/Dewey-Data/deweydatapy/assets/142400584/d6b175df-d927-4491-b18f-d1057beaa70f)
 
-CBSA only has one file, `tl_2023_us_cbsa.zip`. In this case, you can open this file directly.
+CBSA only has one file, `tl_2023_us_cbsa.zip`. In this case, you can read it by
 ```Python
 # Read CBSA shapefile
-shapefile_path = r'C:\tiger\2023\CBSA\tl_2023_us_cbsa.zip'
+cbsa_gdf = cs.read_a_shapefile('CBSA')
+```
+or you can open this file directly using GeoDataFrame.
+```Python
+# Read CBSA shapefile
+shapefile_path = r'C:\census_shape\2023\CBSA\tl_2023_us_cbsa.zip'
 # Read CBSA shapefile as GeoDataFrame
 cbsa_gdf = gpd.read_file("zip://" + shapefile_path)
 ```
