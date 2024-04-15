@@ -20,16 +20,16 @@ You can download all of them or specific files/folders in the following way.
 <img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/78ede7bb-b889-4ca1-835f-c65070430d68" width = "400">
 
 Import necessary libraries and the `census_shape.py` file.
- Also, prepare local directory to save Census TIGER shape files.
+ Also, prepare local directory to save Census shape files.
 ```Python
-# Census TIGER FTP download code sample ----------------------
+# Census shapefile FTP download code sample ----------------------
 import pandas as pd
 import geopandas as gpd
 from census_shape import *
 
 # Local directory to save downloaded files
 # 'C:/census_shape/2023' for example
-local_dir = 'Your local directory path to save Census TIGER files'
+local_dir = 'Your local directory path to save Census shapefiles'
 ```
 
 To download files for year 2023, you can use any of the following approches.
@@ -50,7 +50,8 @@ cs.download_shapefiles(['BG', 'TRACT', 'CBSA'], skip_existing=True)
 `skip_existing` is set to `True` to skip already downloaded files. `timeout` is set to 600 seconds. You can
 increase `timeout` if you have a slow internet connection.
 
-Then you can join the Census Tract, Block Group, CBSA, etc. with Dewey datasets. Direct to the local directory where you saved the Census TIGER files.     
+Then you can join the Census Tract, Block Group, CBSA, etc. with Dewey datasets. Direct to the local directory where
+you saved the Census shapefiles.     
 ```Python
 # Read state shapefile
 
@@ -61,7 +62,7 @@ Then you can join the Census Tract, Block Group, CBSA, etc. with Dewey datasets.
 state_bg_gdf = cs.read_state_shapefile('BG', '06')
 ```
 
-You need geocode to spatial join (`sjoin`) the Census TIGER files with Dewey datasets.
+You need geocode to spatial join (`sjoin`) the Census shapefiles with Dewey datasets.
 Many Dewey datasets have `latitude` and `longitude` columns.
 
 In the following example, I will create a hyphothetical dataset with addresses and geocode them to get latitude and longitude.     
@@ -78,7 +79,7 @@ addr_df = pd.DataFrame({'Address': [addr1, addr2],
 # Convert to a GeoDataFrame
 addr_gdf = gpd.GeoDataFrame(addr_df, geometry=gpd.points_from_xy(addr_df['longitude'], addr_df['latitude']))
 ```
-Now, you can join the Census TIGER files with the Dewey dataset.
+Now, you can join the Census shapefiles with the Dewey dataset.
 `geopandas`'s `sjoin` function is used for the spatial join.
 This will spatial join if the address geocode is within the state_bg_gdf boundary (polygon of BG, TRACT, CBSA, etc.)
 
@@ -89,7 +90,7 @@ joined_gdf = gpd.sjoin(addr_gdf, state_bg_gdf, how='left', predicate='within')
 print(joined_gdf)
 ```
 
-Joined GeoDataFrame will have the columns from both the Dewey dataset and the Census TIGER files
+Joined GeoDataFrame will have the columns from both the Dewey dataset and the Census shapefiles
 (Census Tract, Block Group, etc.).
 
 ![image](https://github.com/Dewey-Data/deweydatapy/assets/142400584/d6b175df-d927-4491-b18f-d1057beaa70f)
@@ -111,5 +112,9 @@ Then same process afterward.
 Once you have Census data, such as American Community Survey (ACS)
 (https://www.census.gov/programs-surveys/acs), you can join them with Dewey datasets
 by Census Tract or Glock Group.
+
+If you are interested in more detailed census data operations, you may consider exploring
+libraries such as `pygris` (https://walker-data.com/pygris/) and
+`ceppy` (https://cenpy-devs.github.io/cenpy/).
 
 Thanks,
