@@ -59,6 +59,7 @@ you saved the Census shapefiles.
 # read_shapefile works only for BG and TRACT filles.
 # Reading 'BG' for example. If you know the state code (06 for California, for example), you can use it.
 # Or you can use 'CA' instead.
+# Below will read 'C:/census_shape/2023/BG/tl_2023_06_bg.zip' file.
 state_bg_gdf = cs.read_state_shapefile('BG', '06')
 ```
 
