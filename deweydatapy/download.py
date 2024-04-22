@@ -460,9 +460,6 @@ def filter_data(data_folder, output_path, query=None, columns=None):
     :param columns: Subset of columns to take from the DataFrame. Default is None, which indicates all columns.
     """
 
-    import os
-    import pandas as pd
-
     try:
         if not os.path.exists(data_folder):
             raise FileNotFoundError(f"Data folder {data_folder} not found.")
