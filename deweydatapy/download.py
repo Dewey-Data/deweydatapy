@@ -449,3 +449,47 @@ def read_local(path, nrows=None):
 
 # Backward compatibility
 read_local_data = read_local
+
+def filter_data(data_folder, output_path, query=None, columns=None):
+    """
+    Filters data as each file is read and merges them into a single csv file based on query and columns input.
+
+    :param data_folder: Folder where user has the downloaded files.
+    :param ouput_path: File path for final file output.
+    :param query: String containing query the columns of a pandas DataFrame with a boolean expression. Default is None, which indicates all rows.
+    :param columns: Subset of columns to take from the DataFrame. Default is None, which indicates all columns.
+    """
+
+    try:
+        if not os.path.exists(data_folder):
+            raise FileNotFoundError(f"Data folder {data_folder} not found.")
+        
+        files = [file for file in os.listdir(data_folder) if file.endswith(".csv.gz") or file.endswith(".csv")]
+        if not files:
+            raise FileNotFoundError(f"No CSV files found in {data_folder}")
+   
+        df_list = []
+        for i, file in enumerate(files):
+            print(f"Processing File {i+1}/{len(files)}")
+            file_path = os.path.join(data_folder, file)
+            try: 
+                df = pd.read_csv(file_path)
+            except Exception as e:
+                print(f"Error reading {file_path}: {e}")
+                continue
+
+            try:
+                df = df if query is None else df.query(query)
+                df = df if columns is None else df[columns]
+                df_list.append(df)
+            except Exception as e:
+                print(f"Error processing {file_path}: {e}")
+                continue
+        df = pd.concat(df_list, ignore_index=True)
+
+        print(f"Saving merged data to {output_path}...") # print the path where the merged data will be saved
+        df.to_csv(output_path, index=False) # save the merged data to a CSV file
+        print("Done!")
+
+    except Exception as e:
+        print(f"Error: {e}")
