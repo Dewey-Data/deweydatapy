@@ -130,7 +130,7 @@ If you do not specifiy `start_date`, it will collect all the files from the mini
 
 Finally, you can download the data to a local destination folder by
 ```Python
-ddp.download_files(files_df, "C:/Temp", skip_exists = True)
+ddp.download_files(apikey_, files_df, "C:/Temp", skip_exists = True)
 ```
 This will download files to `C:/Temp` directory, with the following progress messages.
 <img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/3fe96208-1f96-4d6f-a360-9ca5ace99d57" width = "800">
@@ -141,12 +141,12 @@ You can also use `filename_prefix` option to give file name prefix for all the f
 
 
 ```Python
-ddp.download_files(files_df, "C:/Temp", filename_prefix = "advan_wp_", skip_exists = True)
+ddp.download_files(apikey_, files_df, "C:/Temp", filename_prefix = "advan_wp_", skip_exists = True)
 ```
 
 Alternatively, you can download files skipping `get_file_list` by
 ```Python
-ddp.download_files0(apikey_, pp_advan_wp, "C:/Temp",
+ddp.download_files0(apikey_, apikey_, pp_advan_wp, "C:/Temp",
                     start_date = '2023-09-03', end_date = '2023-12-31')
 ```
 or
