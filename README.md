@@ -160,7 +160,7 @@ files_df = ddp.get_file_list(apikey_, pp_sg_poipoly, print_info = True);
 <br><br>
 You can quickly load/see a sample data by
 ```Python
-sample_df = ddp.read_sample(files_df['link'][0], nrows = 100)
+sample_df = ddp.read_sample(apikey_, files_df['link'][0], nrows = 100)
 ```
 This will load sample data for the first file in `files_df (files_df['link'][0])` for the first 100 rows. You can see any files in the list.
 
