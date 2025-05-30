@@ -4,13 +4,13 @@
 # deweydataypy
 **_Python_** library for Dewey Data Inc.
 
-Find the release notes here: [Release Notes](https://github.com/Dewey-Data/deweydatapy/blob/main/Release%20notes.md).
+Find the release notes here: [Release Notes](./Release%20notes.md).
 
 Bug report: https://community.deweydata.io/c/help/python/43.
 
 Explore data at https://www.deweydata.io/.
 
-Underlying Amplify API tutorial: https://github.com/amplifydata/amplifydata-public/blob/main/README.md
+Old Amplify API tutorial: https://github.com/amplifydata/amplifydata-public/blob/main/README.md. We're not using Amplify's API anymore, but until we have new dedicated documentation for the API, the Amplify Docs may be helpful as the the API responses should be structurally exactly the same or very very close to Amplify.
 
 # Library tutorial
 ### 1. Create API Key
@@ -29,11 +29,11 @@ Choose your product and Get / Subscribe → Connect to API then you can get API 
 ### 3. Install `deweydatapy` library
 You can install this library directly from the GitHub source as following.
 ```Python
-pip install deweydatapy@git+https://github.com/Dewey-Data/deweydatapy
+pip install git+https://github.com/Dewey-Data/deweydatapy.git@new-platform
 ```
 If you use PyCharm, [Python Packages] → [Add Package] → [From Version Control] → Select [Git] and input
 ```Python
-https://github.com/Dewey-Data/deweydatapy
+https://github.com/Dewey-Data/deweydatapy/tree/new-platform
 ```
 
 ```Python

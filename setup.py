@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name='deweydatapy',
-    version='0.2.1',
+    version='0.3.0',
     packages=['deweydatapy'],
     url='https://www.deweydata.io/',
     license='',
