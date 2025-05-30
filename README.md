@@ -13,18 +13,28 @@ Explore data at https://www.deweydata.io/.
 Old Amplify API tutorial: https://github.com/amplifydata/amplifydata-public/blob/main/README.md. We're not using Amplify's API anymore, but until we have new dedicated documentation for the API, the Amplify Docs may be helpful as the the API responses should be structurally exactly the same or very very close to Amplify.
 
 # Library tutorial
-### 1. Create API Key
-In the system, click Connections → Add Connection to create your API key.
-<img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/dd6d4ab2-cc91-4aaf-a4f7-10346e784dbd" width="600">
+
+### 1. Navigate to Dataset and Bulk API Option
+
+Navigate to the Dataset you want to download. Then click "Get Data" and follow the prompts.
+
+<img src="./assets/get-data-picture-1.png" width="600">
 <br>
-<img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/b950e521-b00c-4c53-9897-44b70cfdb04b" width="400">
+<br>
 
-As the message says, please make a copy of your API key and store it somewhere. Also, please hit the **Save** button before use.
+You should eventually get to the "Bulk API" option, which you should click into.
 
-### 2. Get a product path
-Choose your product and Get / Subscribe → Connect to API then you can get API endpoint (product path). Make a copy of it.
+<img src="./assets/bulk-api-picture-1.png" width="600">
+<br>
 
-<img src="https://github.com/Dewey-Data/deweydatapy/assets/142400584/a7ce1a66-c073-4e30-9c7d-3c22ede95155" width="600">
+### 2. Get API Key + API URL
+First, get your API key, if you haven't already (the first time you use the platform it should appear right away). If you've retrieved it before, you can click "Issue New Key" to get a new API key.
+
+<img src="./assets/api-url-and-key-picture-1.png" width="600">
+<br>
+<br>
+
+Next, copy paste the API URL. You'll need that in later steps.
 
 ### 3. Install `deweydatapy` library
 You can install this library directly from the GitHub source as following.
