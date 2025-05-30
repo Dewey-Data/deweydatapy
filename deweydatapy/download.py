@@ -288,7 +288,7 @@ def read_sample0(apikey, dataset_path, nrows=100):
     files_df = get_file_list(apikey, dataset_path, start_page=1, end_page=1, print_info=True)
 
     if not (files_df is None) & (files_df.shape[0] > 0):
-        return read_sample_data(files_df["link"][0], nrows)
+        return read_sample_data(apikey, files_df["link"][0], nrows)
     else:
         return None
 
