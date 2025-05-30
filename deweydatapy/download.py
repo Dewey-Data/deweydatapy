@@ -295,7 +295,7 @@ def read_sample0(apikey, product_path, nrows=100):
 read_sample_data0 = read_sample0
 
 # Download files from file list to a destination folder
-def download_files(files_df, dest_folder, filename_prefix=None, skip_exists=False):
+def download_files(apikey, files_df, dest_folder, filename_prefix=None, skip_exists=False):
     """
     Download files from file list to a destination folder.
 
@@ -332,7 +332,7 @@ def download_files(files_df, dest_folder, filename_prefix=None, skip_exists=Fals
         print("Please be patient. It may take a while...")
         sys.stdout.flush()
 
-        response = requests.get(files_df['link'][i])
+        response = requests.get(files_df['link'][i], headers={'X-API-KEY': apikey})
         open(dest_path, 'wb').write(response.content)
         print(f"   ")
         sys.stdout.flush()
@@ -362,7 +362,7 @@ def download_files0(apikey, product_path, dest_folder,
     print(" ")
 
     if files_df is not None and files_df.shape[0] > 0:
-        download_files(files_df, dest_folder, filename_prefix, skip_exists)
+        download_files(apikey, files_df, dest_folder, filename_prefix, skip_exists)
     else:
         print("No files to download.")
 
@@ -411,7 +411,7 @@ def download_files1(apikey, product_path, dest_folder,
                                  meta=meta,
                                  print_info=False)
 
-        download_files(files_df, dest_folder, filename_prefix, skip_exists)
+        download_files(apikey, files_df, dest_folder, filename_prefix, skip_exists)
 
     print(" ")
     print("Download completed.");
@@ -463,16 +463,16 @@ def filter_data(data_folder, output_path, query=None, columns=None):
     try:
         if not os.path.exists(data_folder):
             raise FileNotFoundError(f"Data folder {data_folder} not found.")
-        
+
         files = [file for file in os.listdir(data_folder) if file.endswith(".csv.gz") or file.endswith(".csv")]
         if not files:
             raise FileNotFoundError(f"No CSV files found in {data_folder}")
-   
+
         df_list = []
         for i, file in enumerate(files):
             print(f"Processing File {i+1}/{len(files)}")
             file_path = os.path.join(data_folder, file)
-            try: 
+            try:
                 df = pd.read_csv(file_path)
             except Exception as e:
                 print(f"Error reading {file_path}: {e}")
