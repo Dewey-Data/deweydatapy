@@ -55,10 +55,10 @@ import deweydatapy as ddp
 * `get_meta`: gets meta information of the datset, especially date range as returned in a `dict`
 * `get_file_list`: gets the list of files in a `DataFrame`
 * `download_files`: download files from the file list to a destination folder
-* `download_files0`: download files with apikey and product path to a destination folder
-* `download_files1`: download files with apikey and product path to a destination folder (see below Examples for the difference between `download_files0` and `download_files1`)
+* `download_files0`: download files with apikey and dataset path to a destination folder
+* `download_files1`: download files with apikey and dataset path to a destination folder (see below Examples for the difference between `download_files0` and `download_files1`)
 * `read_sample`: read a sample of data for a file download URL
-* `read_sample0`: read a sample of data for the first file with apikey and product path
+* `read_sample0`: read a sample of data for the first file with apikey and dataset path
 * `read_local`: read data from locally saved csv.gz file
 
 ### 4. Examples
@@ -69,10 +69,10 @@ import deweydatapy as ddp
 # API Key
 apikey_ = "Paste your API key from step 1 here."
 
-# Advan product path
-pp_advan_wp = "Paste product path from step 2 here."
+# Advan dataset path
+pp_advan_wp = "Paste dataset path from step 2 here."
 ```
-You will only have one API Key while having different product paths for each product.
+You will only have one API Key while having different dataset paths for each dataset.
 
 As a first step, check out the meta information of the dataset by
 ```Python
