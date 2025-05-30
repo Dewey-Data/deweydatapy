@@ -245,10 +245,11 @@ def get_file_list(apikey, product_path, start_page=1, end_page=float('inf'),
 
     return files_df
 
-def read_sample(url, nrows=100):
+def read_sample(apikey, url, nrows=100):
     """
     Read sample data into memory from a URL.
 
+    :param apikey: API key.
     :param url: A file URL.
     :param nrows: Number of rows to read. Default is 100.
     :return: A DataFrame object contains data.
@@ -260,7 +261,7 @@ def read_sample(url, nrows=100):
     # }
 
     # Create a response object from the URL
-    response = requests.get(url)
+    response = requests.get(url, headers={'X-API-KEY': apikey})
 
     try:
         df = pd.read_csv(BytesIO(response.content), compression="gzip", nrows=nrows)
@@ -299,6 +300,7 @@ def download_files(apikey, files_df, dest_folder, filename_prefix=None, skip_exi
     """
     Download files from file list to a destination folder.
 
+    :param apikey: API key.
     :param files_df: File list collected from get_file_list.
     :param dest_folder: Destination local folder to save files.
     :param filename_prefix: Prefix for file names.
