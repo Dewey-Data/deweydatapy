@@ -11,23 +11,23 @@ def __make_api_endpoint(path):
     # remove trailing spaces
     path = path.strip()
     if not path.startswith("https://"):
-        api_endpoint = f"https://app.deweydata.io/external-api/v3/products/{path}/files"
+        api_endpoint = f"https://platform.deweydata.io/api/v1/external/data/{path}"
         return api_endpoint
     else:
         return path
 
-def get_meta(apikey, product_path, print_meta=True):
+def get_meta(apikey, dataset_path, print_meta=True):
     """
     Collects the meta information from data server.
 
     :param apikey: API Key.
-    :param product_path: API endpoint or Product ID.
+    :param dataset_path: API endpoint or Dataset (or Folder) ID.
     :param print_meta: Print meta information. Default is True.
     :return: A DataFrame object contains meta information.
     """
-    product_path = __make_api_endpoint(product_path)
+    dataset_path = __make_api_endpoint(dataset_path)
     try:
-        response = requests.get(url=product_path+"/metadata",
+        response = requests.get(url=dataset_path+"/metadata",
                                 headers={'X-API-KEY': apikey,
                                          'accept': 'application/json'})
     except Exception as e:
@@ -94,7 +94,7 @@ def print_selection_meta(selection_meta, pages_meta):
     print("-----------------------------------------------------------------")
     sys.stdout.flush()
 
-def get_file_list_full(apikey, product_path, start_page=1, end_page=float('inf'),
+def get_file_list_full(apikey, dataset_path, start_page=1, end_page=float('inf'),
                   start_date=None, end_date=None,
                   meta=None,
                   print_info=True):
@@ -102,7 +102,7 @@ def get_file_list_full(apikey, product_path, start_page=1, end_page=float('inf')
     Collects the file list information from data server.
 
     :param apikey: API Key.
-    :param product_path: API endpoint or Product ID.
+    :param dataset_path: API endpoint or Dataset (or Folder) ID.
     :param start_page: Start page of file list. Default is 1.
     :param end_page: End page of file list. Default is Inf.
     :param start_date: Data start date character for files in the form of '2021-07-01'. Default is None ("1000-01-01"), which indicates no limit.
@@ -111,9 +111,9 @@ def get_file_list_full(apikey, product_path, start_page=1, end_page=float('inf')
     :return: DataFrame object contains files information, selection meta and pages meta.
     """
 
-    product_path = __make_api_endpoint(product_path)
+    dataset_path = __make_api_endpoint(dataset_path)
     if(meta is None):
-        meta = get_meta(apikey, product_path, print_meta=False)
+        meta = get_meta(apikey, dataset_path, print_meta=False)
 
     selection_meta = None
     pages_meta = None
@@ -137,7 +137,7 @@ def get_file_list_full(apikey, product_path, start_page=1, end_page=float('inf')
                        'partition_key_after': start_date,
                        'partition_key_before': end_date}
         try:
-            response = requests.get(url=product_path,
+            response = requests.get(url=dataset_path,
                                     params=params_,
                                     headers={'X-API-KEY': apikey,
                                              'accept': 'application/json'})
@@ -220,7 +220,7 @@ def get_file_list_full(apikey, product_path, start_page=1, end_page=float('inf')
 
     return files_df, selection_meta, pages_meta
 
-def get_file_list(apikey, product_path, start_page=1, end_page=float('inf'),
+def get_file_list(apikey, dataset_path, start_page=1, end_page=float('inf'),
                   start_date=None, end_date=None,
                   meta=None,
                   print_info=True):
@@ -228,7 +228,7 @@ def get_file_list(apikey, product_path, start_page=1, end_page=float('inf'),
     Collects the file list information from data server.
 
     :param apikey: API Key.
-    :param product_path: API endpoint or Product ID.
+    :param dataset_path: API endpoint or Dataset (or Folder) ID.
     :param start_page: Start page of file list. Default is 1.
     :param end_page: End page of file list. Default is Inf.
     :param start_date: Data start date character for files in the form of '2021-07-01'. Default is None ("1000-01-01"), which indicates no limit.
@@ -237,7 +237,7 @@ def get_file_list(apikey, product_path, start_page=1, end_page=float('inf'),
     :return: A DataFrame object contains files information.
     """
 
-    files_df, selection_meta, pages_meta = get_file_list_full(apikey, product_path,
+    files_df, selection_meta, pages_meta = get_file_list_full(apikey, dataset_path,
                                                         start_page, end_page,
                                                         start_date, end_date,
                                                         meta,
@@ -277,15 +277,15 @@ read_sample_data = read_sample
 
 
 # Read first file data into memory
-def read_sample0(apikey, product_path, nrows=100):
+def read_sample0(apikey, dataset_path, nrows=100):
     """
-    Read first file data into memory using API key and product path.
+    Read first file data into memory using API key and dataset path.
     :param apikey: API key.
-    :param product_path: API endpoint or Product ID.
+    :param dataset_path: API endpoint or Dataset (or Folder) ID.
     :param nrows: Number of rows to read. Default is 100.
     :return: A DataFrame object contains data.
     """
-    files_df = get_file_list(apikey, product_path, start_page=1, end_page=1, print_info=True)
+    files_df = get_file_list(apikey, dataset_path, start_page=1, end_page=1, print_info=True)
 
     if not (files_df is None) & (files_df.shape[0] > 0):
         return read_sample_data(files_df["link"][0], nrows)
@@ -340,14 +340,14 @@ def download_files(apikey, files_df, dest_folder, filename_prefix=None, skip_exi
         sys.stdout.flush()
 
 
-def download_files0(apikey, product_path, dest_folder,
+def download_files0(apikey, dataset_path, dest_folder,
                     start_date=None, end_date=None,
                     filename_prefix=None, skip_exists=False):
     """
-    Download files with API key and product path to a destination folder.
+    Download files with API key and dataset path to a destination folder.
 
     :param apikey: API Key.
-    :param product_path: API endpoint or Product ID.
+    :param dataset_path: API endpoint or Dataset (or Folder) ID.
     :param dest_folder: Destination local folder to save files.
     :param start_date: Data start date character for files in the form of '2021-07-01'. Default is None ("1000-01-01"), which indicates no limit.
     :param end_date: Data end date character for files in the form of '2023-08-21'. Default is None ('9999-12-31'), which indicates no limit.
@@ -355,7 +355,7 @@ def download_files0(apikey, product_path, dest_folder,
     :param skip_exists: Prefix for file names. Skips downloading if the file exists. Default is True.
     :return:
     """
-    files_df = get_file_list(apikey, product_path,
+    files_df = get_file_list(apikey, dataset_path,
                              start_page=1, end_page=float('inf'),
                              start_date=start_date, end_date=end_date,
                              print_info=True)
@@ -371,14 +371,14 @@ def download_files0(apikey, product_path, dest_folder,
     print(" ")
     print("Download completed.")
 
-def download_files1(apikey, product_path, dest_folder,
+def download_files1(apikey, dataset_path, dest_folder,
                     start_date=None, end_date=None,
                     filename_prefix=None, skip_exists=False):
     """
-    Download files with API key and product path to a destination folder.
+    Download files with API key and dataset path to a destination folder.
 
     :param apikey: API Key.
-    :param product_path: API endpoint or Product ID.
+    :param dataset_path: API endpoint or Dataset (or Folder) ID.
     :param dest_folder: Destination local folder to save files.
     :param start_date: Data start date character for files in the form of '2021-07-01'. Default is None ("1000-01-01"), which indicates no limit.
     :param end_date: Data end date character for files in the form of '2023-08-21'. Default is None ('9999-12-31'), which indicates no limit.
@@ -388,11 +388,11 @@ def download_files1(apikey, product_path, dest_folder,
     """
 
     # Get meta data
-    meta = get_meta(apikey, product_path, print_meta=False)
+    meta = get_meta(apikey, dataset_path, print_meta=False)
 
     # Call get_file_list with meta for the first page to see the total_pages
     p1_files_df, p1_selection_meta, p1_pages_meta = \
-        get_file_list_full(apikey=apikey, product_path=product_path,
+        get_file_list_full(apikey=apikey, dataset_path=dataset_path,
                                 start_page=1, end_page=1,
                                 start_date=start_date, end_date=end_date,
                                 meta=meta,
@@ -407,7 +407,7 @@ def download_files1(apikey, product_path, dest_folder,
         print(" ")
         print("Downloading page {}/{}...".format(i, selection_meta['total_pages'][0]))
 
-        files_df = get_file_list(apikey=apikey, product_path=product_path,
+        files_df = get_file_list(apikey=apikey, dataset_path=dataset_path,
                                  start_page=i, end_page=i,
                                  start_date=start_date, end_date=end_date,
                                  meta=meta,
