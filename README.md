@@ -1,4 +1,4 @@
-**Please read this carefully as the download approach has been changed slightly.**
+**Please read this carefully as the download approach has been changed slightly for the new platform.**
 
 
 # deweydataypy
