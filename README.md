@@ -146,7 +146,7 @@ ddp.download_files(apikey_, files_df, "C:/Temp", filename_prefix = "advan_wp_", 
 
 Alternatively, you can download files skipping `get_file_list` by
 ```Python
-ddp.download_files0(apikey_, apikey_, pp_advan_wp, "C:/Temp",
+ddp.download_files0(apikey_, pp_advan_wp, "C:/Temp",
                     start_date = '2023-09-03', end_date = '2023-12-31')
 ```
 or
