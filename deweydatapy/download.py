@@ -30,6 +30,7 @@ def get_meta(apikey, dataset_path, print_meta=True):
         response = requests.get(url=dataset_path+"/metadata",
                                 headers={'X-API-KEY': apikey,
                                          'accept': 'application/json'})
+        response.raise_for_status()
     except Exception as e:
         print("Error in requests.get")
         print(e)
@@ -141,6 +142,7 @@ def get_file_list_full(apikey, dataset_path, start_page=1, end_page=float('inf')
                                     params=params_,
                                     headers={'X-API-KEY': apikey,
                                              'accept': 'application/json'})
+            response.raise_for_status()
         except Exception as e:
             print("Error in requests.get")
             print(e)
@@ -262,6 +264,7 @@ def read_sample(apikey, url, nrows=100):
 
     # Create a response object from the URL
     response = requests.get(url, headers={'X-API-KEY': apikey})
+    response.raise_for_status()
 
     try:
         df = pd.read_csv(BytesIO(response.content), compression="gzip", nrows=nrows)
@@ -335,6 +338,7 @@ def download_files(apikey, files_df, dest_folder, filename_prefix=None, skip_exi
         sys.stdout.flush()
 
         response = requests.get(files_df['link'][i], headers={'X-API-KEY': apikey})
+        response.raise_for_status()
         open(dest_path, 'wb').write(response.content)
         print(f"   ")
         sys.stdout.flush()
