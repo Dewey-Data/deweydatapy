@@ -1,5 +1,6 @@
 import gzip
 import os
+import re
 import sys
 from io import BytesIO
 
@@ -125,9 +126,16 @@ def get_file_list_full(apikey, dataset_path, start_page=1, end_page=float('inf')
     if end_date is None:
         end_date = "9999-12-31"
 
-    # To proper date format: for example '2023-3-4' to '2023-03-04'
-    start_date = datetime.strptime(start_date, '%Y-%m-%d').strftime('%Y-%m-%d')
-    end_date = datetime.strptime(end_date, '%Y-%m-%d').strftime('%Y-%m-%d')
+    if re.match(r'^\d{4}-\d{2}$', (start_date or '').strip()):
+        start_date = (start_date or '').strip()
+    else:
+        # To proper date format: for example '2023-3-4' to '2023-03-04'
+        start_date = datetime.strptime(start_date, '%Y-%m-%d').strftime('%Y-%m-%d')
+    if re.match(r'^\d{4}-\d{2}$', (end_date or '').strip()):
+        end_date = (end_date or '').strip()
+    else:
+        # To proper date format: for example '2023-3-4' to '2023-03-04'
+        end_date = datetime.strptime(end_date, '%Y-%m-%d').strftime('%Y-%m-%d')
 
     page = start_page
     while True:
