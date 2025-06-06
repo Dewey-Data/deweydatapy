@@ -255,7 +255,7 @@ def get_file_list(apikey, dataset_path, start_page=1, end_page=float('inf'),
 
     return files_df
 
-def read_sample(apikey, url, nrows=100):
+def read_sample(url, nrows=100):
     """
     Read sample data into memory from a URL.
 
@@ -271,7 +271,7 @@ def read_sample(apikey, url, nrows=100):
     # }
 
     # Create a response object from the URL
-    response = requests.get(url, headers={'X-API-KEY': apikey})
+    response = requests.get(url)
     response.raise_for_status()
 
     try:
@@ -299,7 +299,7 @@ def read_sample0(apikey, dataset_path, nrows=100):
     files_df = get_file_list(apikey, dataset_path, start_page=1, end_page=1, print_info=True)
 
     if not (files_df is None) & (files_df.shape[0] > 0):
-        return read_sample_data(apikey, files_df["link"][0], nrows)
+        return read_sample_data(files_df["link"][0], nrows)
     else:
         return None
 
@@ -307,11 +307,10 @@ def read_sample0(apikey, dataset_path, nrows=100):
 read_sample_data0 = read_sample0
 
 # Download files from file list to a destination folder
-def download_files(apikey, files_df, dest_folder, filename_prefix=None, skip_exists=False):
+def download_files(files_df, dest_folder, filename_prefix=None, skip_exists=False):
     """
     Download files from file list to a destination folder.
 
-    :param apikey: API key.
     :param files_df: File list collected from get_file_list.
     :param dest_folder: Destination local folder to save files.
     :param filename_prefix: Prefix for file names.
@@ -345,7 +344,7 @@ def download_files(apikey, files_df, dest_folder, filename_prefix=None, skip_exi
         print("Please be patient. It may take a while...")
         sys.stdout.flush()
 
-        response = requests.get(files_df['link'][i], headers={'X-API-KEY': apikey})
+        response = requests.get(files_df['link'][i])
         response.raise_for_status()
         open(dest_path, 'wb').write(response.content)
         print(f"   ")
@@ -376,7 +375,7 @@ def download_files0(apikey, dataset_path, dest_folder,
     print(" ")
 
     if files_df is not None and files_df.shape[0] > 0:
-        download_files(apikey, files_df, dest_folder, filename_prefix, skip_exists)
+        download_files(files_df, dest_folder, filename_prefix, skip_exists)
     else:
         print("No files to download.")
 
@@ -425,7 +424,7 @@ def download_files1(apikey, dataset_path, dest_folder,
                                  meta=meta,
                                  print_info=False)
 
-        download_files(apikey, files_df, dest_folder, filename_prefix, skip_exists)
+        download_files(files_df, dest_folder, filename_prefix, skip_exists)
 
     print(" ")
     print("Download completed.");
