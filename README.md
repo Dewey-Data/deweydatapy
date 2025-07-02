@@ -30,7 +30,7 @@ You should eventually get to the "Bulk API" option, which you should click into.
 ### 2. Get API Key + API URL
 First, get your API key, if you haven't already (the first time you use the platform it should appear right away). If you've retrieved it before, you can click "Issue New Key" to get a new API key.
 
-<img width="690" alt="Screenshot 2025-07-02 at 12 51 34 PM" src="https://github.com/user-attachments/assets/5f34e5d3-dc28-4495-86c5-0a8b22ee38fe" />
+<img width="688" alt="Screenshot 2025-07-02 at 12 51 55 PM" src="https://github.com/user-attachments/assets/39cc0458-e0ff-493c-a8f3-85d8ad13903c" />
 
 <br>
 <br>
